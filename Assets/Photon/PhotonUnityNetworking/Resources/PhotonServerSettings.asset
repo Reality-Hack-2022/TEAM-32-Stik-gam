@@ -34,12 +34,18 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - CantHearYou
+  - ChangeColour
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
+  - DisableTool
+  - EnableTool
   - Fire
-  - RespawnSpaceship
   - ForceRelease
+  - HeresWhy
+  - RespawnSpaceship
+  - RPC_SetColor
   - SetKinematicFalse
   - SetKinematicTrue
   DisableAutoOpenWizard: 1
