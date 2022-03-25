@@ -74,7 +74,6 @@ public class HandAnim : MonoBehaviour
     {
         if (isLeft)
         {
-            StartCoroutine()
         }
         else
         {
