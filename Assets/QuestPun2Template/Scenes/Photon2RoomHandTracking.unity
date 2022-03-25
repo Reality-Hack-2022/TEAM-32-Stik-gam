@@ -846,7 +846,7 @@ MonoBehaviour:
   colorMapEditorBrightness: 0
   colorMapEditorPosterize: 0
   textureOpacity_: 0.495
-  edgeRenderingEnabled_: 0
+  edgeRenderingEnabled_: 1
   edgeColor_: {r: 1, g: 1, b: 1, a: 1}
   colorMapType: 0
 --- !u!1001 &6216304270063801168
@@ -917,6 +917,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5351334270027034616, guid: 654d6ec01a0b9dd47acedbfc0838bb71, type: 3}
+      propertyPath: AllowRecenter
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5351334270027034616, guid: 654d6ec01a0b9dd47acedbfc0838bb71, type: 3}
       propertyPath: isInsightPassthroughEnabled
       value: 1
