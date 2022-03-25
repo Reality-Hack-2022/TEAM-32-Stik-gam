@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Networking.Pun2
+namespace NetworkingShin.Pun2
 {
     public class OculusPlayer : MonoBehaviour
     {

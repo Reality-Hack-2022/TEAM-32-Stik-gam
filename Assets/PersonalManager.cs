@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace Networking.Pun2
+namespace NetworkingShin.Pun2
 {
     public class PersonalManager : MonoBehaviourPunCallbacks
     {

@@ -7,7 +7,7 @@ using System.Collections;
 //
 //This script connects to PHOTON servers and creates a room if there is none, then automatically joins
 //
-namespace Networking.Pun2
+namespace NetworkingShin.Pun2
 {
     public class NetworkManager : MonoBehaviourPunCallbacks
     {

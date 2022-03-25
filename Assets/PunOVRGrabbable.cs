@@ -6,7 +6,7 @@ using Photon.Pun;
 //Custom grabbable script which checks if the grabber "is mine" to actually grab
 //
 
-namespace Networking.Pun2
+namespace NetworkingShin.Pun2
 {
     [RequireComponent(typeof(PhotonView))]
     public class PunOVRGrabbable : OVRGrabbable
