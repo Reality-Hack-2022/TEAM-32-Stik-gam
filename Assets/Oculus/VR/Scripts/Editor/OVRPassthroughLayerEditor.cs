@@ -1,9 +1,21 @@
+/************************************************************************************
+Copyright : Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
+
+Your use of this SDK or tool is subject to the Oculus SDK License Agreement, available at
+https://developer.oculus.com/licenses/oculussdk/
+
+Unless required by applicable law or agreed to in writing, the Utilities SDK distributed
+under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ANY KIND, either express or implied. See the License for the specific language governing
+permissions and limitations under the License.
+************************************************************************************/
+
 using UnityEditor;
 using UnityEngine;
 
 using ColorMapEditorType = OVRPassthroughLayer.ColorMapEditorType;
 
-[CustomEditor(typeof(OVRPassthroughLayer), false)]
+[CustomEditor(typeof(OVRPassthroughLayer))]
 public class OVRPassthroughLayerEditor : Editor
 {
 	public override void OnInspectorGUI()
@@ -46,6 +58,11 @@ public class OVRPassthroughLayerEditor : Editor
 			layer.colorMapEditorBrightness = EditorGUILayout.Slider("Brightness", layer.colorMapEditorBrightness, -1, 1);
 			layer.colorMapEditorPosterize = EditorGUILayout.Slider("Posterize", layer.colorMapEditorPosterize, 0, 1);
 			layer.colorMapEditorGradient = EditorGUILayout.GradientField("Colorize", layer.colorMapEditorGradient);
+		}
+
+		if (GUI.changed)
+		{
+			EditorUtility.SetDirty(layer);
 		}
 	}
 }

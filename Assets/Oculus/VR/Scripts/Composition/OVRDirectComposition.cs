@@ -76,9 +76,9 @@ public class OVRDirectComposition : OVRCameraComposition
 #if USING_MRC_COMPATIBLE_URP_VERSION
 			var directCamData = directCompositionCamera.GetUniversalAdditionalCameraData();
 			if (directCamData != null)
-            {
+			{
 				directCamData.allowXRRendering = false;
-            }
+			}
 #elif USING_URP
 			Debug.LogError("Using URP with MRC is only supported with URP version 10.0.0 or higher. Consider using Unity 2020 or higher.");
 #else
@@ -136,7 +136,7 @@ public class OVRDirectComposition : OVRCameraComposition
 			else
 			{
 				OVRPose worldSpacePose = new OVRPose();
-				worldSpacePose = OVRExtensions.ToWorldSpacePose(trackingSpacePose);
+				worldSpacePose = OVRExtensions.ToWorldSpacePose(trackingSpacePose, mainCamera);
 				directCompositionCamera.transform.FromOVRPose(worldSpacePose);
 			}
 		}
@@ -159,7 +159,7 @@ public class OVRDirectComposition : OVRCameraComposition
 				}
 				else
 				{
-					OVRPose worldSpacePose = ComputeCameraWorldSpacePose(extrinsics);
+					OVRPose worldSpacePose = ComputeCameraWorldSpacePose(extrinsics, mainCamera);
 					directCompositionCamera.transform.FromOVRPose(worldSpacePose);
 				}
 			}
