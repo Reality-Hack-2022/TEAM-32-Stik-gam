@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using TMPro; // Add the TextMesh Pro namespace to access the various functions.
 using System.Linq;
 
-public class HandAnim : MonoBehaviour
+public class Hands : MonoBehaviour
 {
     private Controls controller;
     public int playerID = -1;
