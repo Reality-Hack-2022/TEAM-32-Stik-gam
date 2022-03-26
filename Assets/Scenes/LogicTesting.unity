@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &142435768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: -1
+  Alive: 0
 --- !u!65 &142435769
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -263,6 +264,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd73f05310da9c44809073cae830b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PrepTime: 30
+  TimeBetweenRounds: 10
+  count_3: {fileID: 21300000, guid: 279ea41017311de48bc30dcf82895299, type: 3}
+  count_2: {fileID: 21300000, guid: 72bb8bb8e60c67347aeb1038622cc4f2, type: 3}
+  count_1: {fileID: 21300000, guid: 027389fedbd88ed49831a38e751a0e07, type: 3}
+  fight_sprite: {fileID: 21300000, guid: 3401614458fcbb84fa06277a1840afc2, type: 3}
+  draw_sprite: {fileID: 21300000, guid: 13820aa3fe2c14042a1371a05d43a1d0, type: 3}
 --- !u!4 &1040710164
 Transform:
   m_ObjectHideFlags: 0
@@ -289,6 +297,7 @@ GameObject:
   - component: {fileID: 1659138906}
   - component: {fileID: 1659138905}
   - component: {fileID: 1659138904}
+  - component: {fileID: 1659138907}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -362,6 +371,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1659138907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659138903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &2083340501
 GameObject:
   m_ObjectHideFlags: 0

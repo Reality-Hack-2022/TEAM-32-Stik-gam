@@ -35,6 +35,20 @@ public class PlayerEvents : MonoBehaviour
             this.isLeft = isLeft;
         }
     }
+    
+    public struct PlayerToggleDraw
+    {
+        public int playerID;
+        public bool canDraw;
+        public bool isLeft;
+        public PlayerToggleDraw(int playerID, bool canDraw, bool isLeft)
+        {
+            this.playerID = playerID;
+            this.canDraw = canDraw;
+            this.isLeft = isLeft;
+        }
+    }
+
     public struct PlayerTriggerDown
     {
         public int playerID;
