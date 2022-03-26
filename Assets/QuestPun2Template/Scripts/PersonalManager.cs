@@ -25,6 +25,7 @@ namespace Networking.Pun2
         //Tools
         List<GameObject> toolsR;
         List<GameObject> toolsL;
+        List<GameObject> currentLine;
         int currentToolR;
         int currentToolL;
 
@@ -95,26 +96,30 @@ namespace Networking.Pun2
                     //toolsL[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
             }
 
-
+            currentLine = new List<GameObject>();
         }
 
         //Detects input from Thumbstick to switch "hand tools"
         private void Update()
         {
             if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
-                PhotonNetwork.Instantiate(generatedSphere.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+            {
+                GameObject curr = PhotonNetwork.Instantiate(generatedSphere.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+                currentLine.Add(curr);
+            }
             if (OVRInput.GetUp(OVRInput.Button.SecondaryIndexTrigger))
             {
-                PhotonNetwork.Instantiate(generatedParent.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
-                var drawings = FindObjectsOfType<generatedChild>();
-                for(var i = 0; i < drawings.Length; i++)
+                GameObject father = PhotonNetwork.Instantiate(generatedParent.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+                
+                for(var i = 0; i < currentLine.Count; i++)
                 {
-                    if(drawings[i].GetComponent<Photon.Pun.PhotonView>().IsMine && drawings[i].transform.parent == null)
+                    if(currentLine[i].GetComponent<Photon.Pun.PhotonView>().IsMine && currentLine[i].transform.parent == null)
                     {
                         Debug.Log("It's mine!");
-                        drawings[i].transform.parent = generatedParent.transform;
+                        currentLine[i].transform.parent = father.transform;
                     }
                 }
+                currentLine.Clear();
             }
             //not in scope/can't use :(
             //if (OVRInput.GetUp(OVRInput.Button.PrimaryThumbstick))
