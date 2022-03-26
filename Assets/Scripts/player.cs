@@ -37,15 +37,20 @@ public class player : MonoBehaviour
 
     private IEnumerator collectCoordsFromHand(bool isLeft, float gapTime)
     {
-        yield return new WaitForSeconds(gapTime);
-        
-        if (isLeft)
-        {
-            vectors.Add(LeftHandAnchor.transform.position);
-        }
-        else
-        {
-            vectors.Add(RightHandAnchor.transform.position);
+        while (true)
+        { 
+            if (isLeft)
+            {
+                print("Hello from the left coroutiner");
+
+                vectors.Add(LeftHandAnchor.transform.position);
+            }
+            else
+            {
+                print("Hello from the right coroutiner");
+                vectors.Add(RightHandAnchor.transform.position);
+            }
+            yield return new WaitForSeconds(gapTime);
         }
     }
 
@@ -53,6 +58,7 @@ public class player : MonoBehaviour
     {
         GameObject newMeshSpawner = new GameObject("Mesh Spawner");
         MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
+        if (vectors == null) print("the vectors are null");
         meshSpawner.CreateSplineMesh(vectors);
 
         vectors = new List<Vector3>();

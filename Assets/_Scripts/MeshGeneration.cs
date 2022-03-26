@@ -20,7 +20,7 @@ public class MeshGeneration : MonoBehaviour
     //INPUT INTO MESH GEN
     public int x_size = 7; //cylinder division count
     public int z_size = 10; //data points scaled by division count
-    public int radius = 10;
+    public float radius = 0.5f;
 
     //mesh definitions
     private Mesh mesh;

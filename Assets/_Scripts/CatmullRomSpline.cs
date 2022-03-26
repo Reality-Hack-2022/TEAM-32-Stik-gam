@@ -9,7 +9,7 @@ public class CatmullRomSpline : MonoBehaviour
 										  //Are we making a line or a loop?
 	public bool isLooping = true;
 	//how many divisions per segment
-	public int divisions = 10;
+	public int divisions = 2;
 	public int knotCount = 0;
 
 	//-------------PRIVATE--------------------------
