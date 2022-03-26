@@ -18,11 +18,11 @@ public class Weapon : MonoBehaviour
 
     public void Grabbed() {
         Transform papa = this.transform.parent;
-        papa.parent = this.transform;
+        papa.SetParent(this.transform);
     }
 
     public void LetGo() {
         Transform realpapa = this.transform.GetChild(0);
-        this.transform.parent = realpapa;
+        this.transform.SetParent(realpapa);
     }
 }

@@ -21,6 +21,20 @@ public class RoundManager : MonoBehaviour
     public GameObject lose_UI;
     player[] players;
     List<int> ReadyPlayers;
+    bool startedGame = false;
+
+    private void Update()
+    {
+        if (!startedGame)
+        {
+            PlayerHealth[] player_list = GameObject.FindObjectsOfType<PlayerHealth>();
+            if (player_list.Length > 1)
+            {
+                StartCoroutine(StartRound());
+            }
+            startedGame = true;
+        }
+    }
 
     void Start()
     {
@@ -28,7 +42,6 @@ public class RoundManager : MonoBehaviour
         PlayerHealths = GameObject.FindObjectsOfType<PlayerHealth>(); // Change this from start to whenever both players have joined
         
         playerToggleDrawSubscription = EventBus.Subscribe<PlayerEvents.PlayerToggleDraw>(DisablePlayerDrawing);
-        playerPressPrimaryDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerPrimaryDown>(PlayerPressStart);
         players = GameObject.FindObjectsOfType<player>();
 
         // Only the largest Round Manager should survive so it can manage all players!
@@ -73,6 +86,8 @@ public class RoundManager : MonoBehaviour
         // Disable drawing abilities of both Players
         EventBus.Publish(new PlayerEvents.PlayerToggleDraw(0, false, false));
         EventBus.Publish(new PlayerEvents.PlayerToggleDraw(1, false, false));
+        
+        //Kill both players just to make sure neither can take damage
 
         // Show winning player that they won
         
@@ -143,7 +158,7 @@ public class RoundManager : MonoBehaviour
         }
 
     }
-
+/*
     void PlayerPressStart(PlayerEvents.PlayerPrimaryDown e) {
         int playerID = e.playerID;
         if (!ReadyPlayers.Contains(playerID)) {
@@ -153,7 +168,7 @@ public class RoundManager : MonoBehaviour
             }
         }
     }
-
+*/
     IEnumerator SelfDestruct() {
         yield return new WaitForSeconds(0.1f);
         Destroy(this.gameObject);
