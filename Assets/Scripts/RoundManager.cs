@@ -49,8 +49,9 @@ public class RoundManager : MonoBehaviour
 
         //Assign player_ids
         for (int i = 0; i < PlayerHealths.Length; ++i) {
+            print(i);
             PlayerHealths[i].PlayerID = i;
-            players[i].playerID = i;
+            PlayerHealths[i].gameObject.GetComponent<player>().playerID = i;
         }
         
     }

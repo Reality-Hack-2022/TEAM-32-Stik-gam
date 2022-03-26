@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
         Death();
     }
 
-    void Death() {
+    public void Death() {
         EventBus.Publish(new PlayerEvents.PlayerDeathEvent(PlayerID));
     }
 }
