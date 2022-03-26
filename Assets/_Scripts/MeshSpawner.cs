@@ -77,7 +77,7 @@ public class MeshSpawner : MonoBehaviour
         //convert to list 
 
 
-        //generateCollision();
+        generateCollision();
     }
     */
 
@@ -124,6 +124,7 @@ public class MeshSpawner : MonoBehaviour
     bool generateCollision()
     {
         //Quaternion rot = new Quaternion();
+        List<BoxCollider> temp = new List<BoxCollider>();
         for (int i = 0; i < storedRawMesh.Count; i++) //for each Rawmesh
         {
 
@@ -131,16 +132,25 @@ public class MeshSpawner : MonoBehaviour
 
             for (int j = 0; j < rMesh.knotCount - 2; j++) //for each knot
             {
-                
-                BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
-                boxCollider.center = rMesh.knotLoc[j];
-                //rot.SetFromToRotation(Vector3.up, rMesh.knotTan[j]);
-                boxCollider.transform.Rotate(rMesh.knotTan[j]);
-                boxCollider.size = new Vector3(radius*2, radius*2, radius*2);
-                
+                BoxCollider boxC = gameObject.AddComponent<BoxCollider>();
+                boxC.center = rMesh.knotLoc[j];
+                boxC.size = new Vector3(radius * 3.5f, radius * 3.5f, radius * 3.5f);
+                temp.Add(boxC);
             }
 
         }
+
+        //set that colliders ignores self collison
+        for (int i = 0; i < temp.Count; i++)
+        {
+            BoxCollider b1 = temp[i];
+            for (int j = 0; j < temp.Count; j++)
+            {
+                BoxCollider b2 = temp[j];
+                Physics.IgnoreCollision(b1, b2, true);
+            }
+        }
+
         return true;
     }
 

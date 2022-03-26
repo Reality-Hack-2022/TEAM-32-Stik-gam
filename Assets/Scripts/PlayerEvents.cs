@@ -85,6 +85,20 @@ public class PlayerEvents : MonoBehaviour
         }
     }
 
+
+    public struct PlayerSecondaryDown
+    {
+        public int playerID;
+        public bool isLeft;
+
+        public PlayerSecondaryDown(int playerID, bool isLeft)
+        {
+            this.playerID = playerID;
+            this.isLeft = isLeft;
+        }
+    }
+
+
     public struct PlayerGripUp
     {
         public int playerID;
@@ -95,4 +109,6 @@ public class PlayerEvents : MonoBehaviour
             this.isLeft = isLeft;
         }
     }
+
+    
 }
