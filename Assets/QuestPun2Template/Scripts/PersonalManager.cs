@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 //
 namespace Networking.Pun2
 {
-    public class PersonalManager : MonoBehaviourPunCallbacks
+    public class PersonalManager : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     {
         [SerializeField] GameObject headPrefab;
         [SerializeField] GameObject bodyPrefab;
@@ -17,7 +17,8 @@ namespace Networking.Pun2
         [SerializeField] GameObject handLPrefab;
         [SerializeField] GameObject ovrCameraRig;
         [SerializeField] Transform[] spawnPoints;
-        [SerializeField] GameObject generatedCube;
+        [SerializeField] GameObject generatedSphere;
+        [SerializeField] GameObject generatedParent;
 
         public bool IsCalibrating = false;
 
@@ -80,8 +81,8 @@ namespace Networking.Pun2
             {
                 toolsR.Add(obj.transform.GetChild(i).gameObject);
                 //obj.transform.GetComponentInChildren<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
-                if (i > 0)
-                    toolsR[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
+                //if (i > 0)
+                    //toolsR[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
             }
 
             //Instantiate left hand
@@ -90,8 +91,8 @@ namespace Networking.Pun2
             {
                 toolsL.Add(obj.transform.GetChild(i).gameObject);
                 //obj.transform.GetComponentInChildren<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
-                if (i > 0)
-                    toolsL[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
+                //if (i > 0)
+                    //toolsL[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
             }
 
 
@@ -100,6 +101,21 @@ namespace Networking.Pun2
         //Detects input from Thumbstick to switch "hand tools"
         private void Update()
         {
+            if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
+                PhotonNetwork.Instantiate(generatedSphere.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+            if (OVRInput.GetUp(OVRInput.Button.SecondaryIndexTrigger))
+            {
+                PhotonNetwork.Instantiate(generatedParent.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+                var drawings = FindObjectsOfType<generatedChild>();
+                for(var i = 0; i < drawings.Length; i++)
+                {
+                    if(drawings[i].GetComponent<Photon.Pun.PhotonView>().IsMine && drawings[i].transform.parent == null)
+                    {
+                        Debug.Log("It's mine!");
+                        drawings[i].transform.parent = generatedParent.transform;
+                    }
+                }
+            }
             //not in scope/can't use :(
             //if (OVRInput.GetUp(OVRInput.Button.PrimaryThumbstick))
             //    SwitchToolL();
@@ -172,7 +188,7 @@ namespace Networking.Pun2
 
         void GenerateCube()
         {
-            PhotonNetwork.Instantiate(generatedCube.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+            PhotonNetwork.Instantiate(generatedSphere.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
         }
 
         //If disconnected from server, returns to Lobby to reconnect
@@ -224,11 +240,13 @@ namespace Networking.Pun2
             if (e.isLeft)
             {
                 currentColorIndex--;
+                if (currentColorIndex < 0) currentColorIndex = colors.Length - 1;
                 ChangeColor();
             }
             else
             {
                 currentColorIndex--;
+                if (currentColorIndex < 0) currentColorIndex = colors.Length - 1;
                 ChangeColor();
             }
         }
@@ -238,11 +256,13 @@ namespace Networking.Pun2
             if (e.isLeft)
             {
                 currentColorIndex++;
+                if (currentColorIndex > colors.Length - 1) currentColorIndex = 0;
                 ChangeColor();
             }
             else
             {
                 currentColorIndex++;
+                if (currentColorIndex > colors.Length - 1) currentColorIndex = 0;
                 ChangeColor();
             }
         }
@@ -266,6 +286,20 @@ namespace Networking.Pun2
             else
             {
 
+            }
+        }
+
+        // ネットワークオブジェクトが生成された時に呼ばれるコールバック
+        void IPunInstantiateMagicCallback.OnPhotonInstantiate(PhotonMessageInfo info)
+        {
+            if (info.Sender.IsLocal)
+            {
+                Debug.Log("自身がネットワークオブジェクトを生成しました");
+                Debug.Log(info.photonView);
+            }
+            else
+            {
+                Debug.Log("他プレイヤーがネットワークオブジェクトを生成しました");
             }
         }
     }

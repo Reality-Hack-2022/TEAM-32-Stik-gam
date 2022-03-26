@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18030395, g: 0.22573234, b: 0.30695844, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -657,7 +657,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 752322057}
   - {fileID: 276835121}
-  generatedCube: {fileID: 5256624488409600308, guid: a04ba55d98f274de4939959f76a7e107, type: 3}
+  generatedSphere: {fileID: 2099756814017531354, guid: 2c7acbaf9c1cb4c17b0792738117f9d6, type: 3}
+  generatedParent: {fileID: 2237967942942969238, guid: 9f9bbda852c464bc797a167132acd445, type: 3}
   IsCalibrating: 0
   colors:
   - Red

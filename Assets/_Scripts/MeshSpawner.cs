@@ -1,8 +1,10 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshSpawner : MonoBehaviour
+public class MeshSpawner : MonoBehaviourPunCallbacks
 {
     //REMOVE LATER AS THIS TAKES INPUT
     //public Transform[] transforms;
@@ -34,12 +36,15 @@ public class MeshSpawner : MonoBehaviour
         storedRawMesh = new List<RawMesh>();
         storedSplineMesh = new List<SplineMesh>();
         meshes = new List<Mesh>();
-
+        List<Vector3> vectors = GameObject.Find("OVRNetworkCameraRigHands").GetComponent<player>().vectors;
+        //photonView.RPC(nameof(CreateSplineMesh), RpcTarget.All, vectors);
+        this.CreateSplineMesh(vectors);
     }
-
 
     public void CreateSplineMesh(List<Vector3> vectors)
     {
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Instantiate(cube, Vector3.zero, Quaternion.identity);
         Vector3[] tt = new Vector3[vectors.Count];
         for (int i = 0; i < vectors.Count; i++)
         {
@@ -116,8 +121,7 @@ public class MeshSpawner : MonoBehaviour
                 Physics.IgnoreCollision(b1, b2, true);
             }
         }
-
+        //PhotonNetwork.Instantiate(this.gameObject.name, Vector3.zero, Quaternion.identity, 0);
         return true;
-    }
-
+    }   
 }

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class player : MonoBehaviourPunCallbacks
 {
     private Subscription<PlayerEvents.PlayerGripDown> playerGripDownSubscription;
     private Subscription<PlayerEvents.PlayerGripUp> playerGripUpSubscription;
@@ -63,13 +63,24 @@ public class player : MonoBehaviour
             //GameObject newMeshSpawner = new GameObject("Mesh Spawner");
             //MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
             //print("last vector in the input: " + vectors[vectors.Count -1]);
-            GameObject spawner = PhotonNetwork.Instantiate(meshSpawner.name, Vector3.zero, Quaternion.identity, 0);
-            spawner.GetComponent<MeshSpawner>().CreateSplineMesh(vectors);
+            //GameObject spawner = Instantiate(meshSpawner, Vector3.zero, Quaternion.identity);
+            //photonView.RPC(nameof(CreateSplineMesh), RpcTarget.All, spawner);
+            //spawner.GetComponent<MeshSpawner>().CreateSplineMesh(vectors);
+            //PhotonNetwork.Instantiate(spawner.name, Vector3.zero, Quaternion.identity, 0);
         }
 
         vectors = new List<Vector3>();
         
     }
+
+    //[PunRPC]
+    //private void CreateSplineMesh(GameObject spawner)
+    //{
+    //    spawner.GetComponent<MeshSpawner>().CreateSplineMesh(vectors);
+    //    vectors = new List<Vector3>();
+    //    Debug.Log("called!!!");
+
+    //}
     private void Trigger_performed(PlayerEvents.PlayerTriggerDown e)
     {
         //start a corotine 
