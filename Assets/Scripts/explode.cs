@@ -14,7 +14,7 @@ public class explode : MonoBehaviour
 
     }
 
-    private void Death(PlayerEvents.PlayerTriggerDown e)
+    private void Death(PlayerEvents.PlayerDeathEvent e)
     {
         gameObject.transform.GetChild(0).GetComponent<MeshFilter>().mesh = null;
         Instantiate(gameObject, transform);
