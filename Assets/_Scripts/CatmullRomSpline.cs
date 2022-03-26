@@ -6,7 +6,7 @@ public class CatmullRomSpline : MonoBehaviour
 {
 	//Has to be at least 2 points << modify 
 	public Vector3[] controlPointsList; //input passed in from VR Controller
-										  //Are we making a line or a loop?
+										//Are we making a line or a loop?
 	public bool isLooping = true;
 	//how many divisions per segment
 	public int divisions = 2;
@@ -18,33 +18,33 @@ public class CatmullRomSpline : MonoBehaviour
 
 
 	public Vector3[] getKnotLocations()
-    {
+	{
 		return knotLocations;
-    }
+	}
 
 	public Vector3[] getKnotTangents()
-    {
+	{
 		return knotTangents;
-    }
+	}
 
-    //Display without having to press play
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.white;
+	//Display without having to press play
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.white;
 
-        QueryResults();
+		QueryResults();
 
-        //Draw the Catmull-Rom spline between the points
-        /*
+		//Draw the Catmull-Rom spline between the points
+		/*
 		for (int i = 0; i < controlPointsList.Length - 1; i++)
 		{
 			DisplayCatmullRomSpline(i);
 		}
 		*/
-    }
+	}
 
-    //Display a spline between 2 points derived with the Catmull-Rom spline algorithm
-    private void DisplayCatmullRomSpline(int pos)
+	//Display a spline between 2 points derived with the Catmull-Rom spline algorithm
+	private void DisplayCatmullRomSpline(int pos)
 	{
 		Vector3 p0, p1, p2, p3 = new Vector3();
 		if (isLooping)
@@ -54,7 +54,8 @@ public class CatmullRomSpline : MonoBehaviour
 			p1 = controlPointsList[pos];
 			p2 = controlPointsList[ClampListPos(pos + 1)];
 			p3 = controlPointsList[ClampListPos(pos + 2)];
-		} else //is not looping, the do the casin on pos = first or last.
+		}
+		else //is not looping, the do the casin on pos = first or last.
 		{
 			//The 4 points we need to form a spline between p1 and p2
 			//case on if pos = 0 (first index, need to complete one before)
@@ -66,14 +67,17 @@ public class CatmullRomSpline : MonoBehaviour
 			if (pos - 1 < 0) //pos = first point
 			{
 				p0 = p1 - (p2 - p1);
-			} else { //else query as ususal
+			}
+			else
+			{ //else query as ususal
 				p0 = controlPointsList[pos - 1];
 			}
 
 			if (pos + 2 == controlPointsList.Length) //pos =  second to last point??
 			{
 				p3 = p2 + (p2 - p1);
-			} else
+			}
+			else
 			{
 				p3 = controlPointsList[pos + 2];
 			}
@@ -140,8 +144,8 @@ public class CatmullRomSpline : MonoBehaviour
 	}
 
 	//clean data version of Display G
-	private void QueryPointData(int pos) 
-    {
+	private void QueryPointData(int pos)
+	{
 		Vector3 p0, p1, p2, p3 = new Vector3();
 		if (isLooping)
 		{
@@ -196,8 +200,8 @@ public class CatmullRomSpline : MonoBehaviour
 			Vector3 newPos = GetCatmullRomPosition(t, p0, p1, p2, p3);
 
 			//push into the data strucutre 
-			knotLocations[pos*divisions + i] = newPos;
-			knotTangents[pos* divisions + i] = (newPos - lastPos).normalized;
+			knotLocations[pos * divisions + i] = newPos;
+			knotTangents[pos * divisions + i] = (newPos - lastPos).normalized;
 
 			//Save this pos so we can draw the next line segment
 			lastPos = newPos;
@@ -206,7 +210,7 @@ public class CatmullRomSpline : MonoBehaviour
 
 	public RawMesh QueryResults()
 	{
-		
+
 		//calculate how many points we will gave
 		knotCount = divisions * (controlPointsList.Length - 1) + 1;
 		knotLocations = new Vector3[knotCount]; //last point doesn't have tangent
@@ -218,7 +222,8 @@ public class CatmullRomSpline : MonoBehaviour
 			QueryPointData(i);
 		}
 		//add the last point so I can debug it
-		knotLocations[knotCount -1] = controlPointsList[controlPointsList.Length - 1];
+		knotLocations[knotCount - 1] = controlPointsList[controlPointsList.Length - 1];
+
 
 		RawMesh ret = new RawMesh();
 		ret.knotLoc = knotLocations;
@@ -227,4 +232,5 @@ public class CatmullRomSpline : MonoBehaviour
 
 		return ret;
 	}
+
 }

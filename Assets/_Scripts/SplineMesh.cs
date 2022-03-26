@@ -18,7 +18,7 @@ public class SplineMesh : MonoBehaviour
         //make the mesh generator
         meshGenerator = gameObject.AddComponent<MeshGeneration>();
     }
-
+    
     void Start()
     {
 
