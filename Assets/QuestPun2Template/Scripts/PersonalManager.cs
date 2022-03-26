@@ -17,6 +17,7 @@ namespace Networking.Pun2
         [SerializeField] GameObject handLPrefab;
         [SerializeField] GameObject ovrCameraRig;
         [SerializeField] Transform[] spawnPoints;
+        [SerializeField] GameObject generatedCube;
 
         //Tools
         List<GameObject> toolsR;
@@ -82,6 +83,11 @@ namespace Networking.Pun2
 
             if (OVRInput.GetUp(OVRInput.Button.SecondaryThumbstick))
                 SwitchToolR();
+
+            if(OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
+            {
+                GenerateCube();
+            }
         }
 
         //disables current tool and enables next tool
@@ -103,6 +109,10 @@ namespace Networking.Pun2
             toolsL[currentToolL].transform.parent.GetComponent<PhotonView>().RPC("EnableTool", RpcTarget.AllBuffered, currentToolL);
         }
 
+        void GenerateCube()
+        {
+            PhotonNetwork.Instantiate(generatedCube.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+        }
 
         //If disconnected from server, returns to Lobby to reconnect
         public override void OnDisconnected(DisconnectCause cause)

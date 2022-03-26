@@ -582,6 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1368676059}
   - component: {fileID: 1368676058}
+  - component: {fileID: 1368676060}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -609,6 +610,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 752322057}
   - {fileID: 276835121}
+  generatedCube: {fileID: 5256624488409600308, guid: a04ba55d98f274de4939959f76a7e107, type: 3}
 --- !u!4 &1368676059
 Transform:
   m_ObjectHideFlags: 0
@@ -624,6 +626,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1368676060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368676057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 466f570c2fd1e4bf891868e277c8567d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1990554543 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5351334270037760538, guid: 654d6ec01a0b9dd47acedbfc0838bb71, type: 3}
