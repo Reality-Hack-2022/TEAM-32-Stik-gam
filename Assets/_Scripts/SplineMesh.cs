@@ -6,6 +6,7 @@ public class SplineMesh : MonoBehaviour
 {
     public MeshFilter mFilter;
     public MeshRenderer mRenderer;
+    public Material mat;
     MeshGeneration meshGenerator; //used to generate all objects
 
 
@@ -17,6 +18,7 @@ public class SplineMesh : MonoBehaviour
         mRenderer = gameObject.AddComponent<MeshRenderer>();
         //make the mesh generator
         meshGenerator = gameObject.AddComponent<MeshGeneration>();
+        mRenderer.material = mat;
     }
     
     void Start()

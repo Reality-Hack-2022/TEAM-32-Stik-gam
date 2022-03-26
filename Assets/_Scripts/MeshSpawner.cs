@@ -10,7 +10,7 @@ public class MeshSpawner : MonoBehaviour
     //DEFINITIONAL ELEMENTS
     public List<RawMesh> storedRawMesh; 
     public int meshCount = 0;
-    public float radius = 0.05f;
+    public float radius = 0.03f;
 
     //GENERATOR OPERATORS
     CatmullRomSpline spline;
