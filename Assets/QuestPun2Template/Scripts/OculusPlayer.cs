@@ -7,6 +7,7 @@ namespace Networking.Pun2
     public class OculusPlayer : MonoBehaviour
     {
         public GameObject head;
+        public GameObject body;
         public GameObject rightHand;
         public GameObject leftHand;
 

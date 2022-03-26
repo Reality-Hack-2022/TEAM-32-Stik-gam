@@ -12,6 +12,7 @@ namespace Networking.Pun2
     public class PersonalManager : MonoBehaviourPunCallbacks
     {
         [SerializeField] GameObject headPrefab;
+        [SerializeField] GameObject bodyPrefab;
         [SerializeField] GameObject handRPrefab;
         [SerializeField] GameObject handLPrefab;
         [SerializeField] GameObject ovrCameraRig;
@@ -28,7 +29,7 @@ namespace Networking.Pun2
             /// If the game starts in Room scene, and is not connected, sends the player back to Lobby scene to connect first.
             if (!PhotonNetwork.NetworkingClient.IsConnected)
             {
-                SceneManager.LoadScene("Photon2Lobby");
+                SceneManager.LoadScene("Lobby");
                 return;
             }
             /////////////////////////////////
@@ -47,14 +48,17 @@ namespace Networking.Pun2
         {
             //Instantiate Head
             GameObject obj = (PhotonNetwork.Instantiate(headPrefab.name, OculusPlayer.instance.head.transform.position, OculusPlayer.instance.head.transform.rotation, 0));
-            obj.GetComponent<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
-            
+            //obj.GetComponent<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
+
+            //Instantiate Body
+            obj = (PhotonNetwork.Instantiate(bodyPrefab.name, OculusPlayer.instance.body.transform.position, OculusPlayer.instance.body.transform.rotation, 0));
+
             //Instantiate right hand
             obj = (PhotonNetwork.Instantiate(handRPrefab.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0));
             for (int i = 0; i < obj.transform.childCount; i++)
             {
                 toolsR.Add(obj.transform.GetChild(i).gameObject);
-                obj.transform.GetComponentInChildren<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
+                //obj.transform.GetComponentInChildren<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
                 if(i > 0)
                     toolsR[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
             }
@@ -64,7 +68,7 @@ namespace Networking.Pun2
             for (int i = 0; i < obj.transform.childCount; i++)
             {
                 toolsL.Add(obj.transform.GetChild(i).gameObject);
-                obj.transform.GetComponentInChildren<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
+                //obj.transform.GetComponentInChildren<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
                 if (i > 0)
                     toolsL[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
             }
