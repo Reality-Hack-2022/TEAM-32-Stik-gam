@@ -10,7 +10,9 @@ public class player : MonoBehaviour
     private Subscription<PlayerEvents.PlayerTriggerUp> playerTriggerUpSubscription;
     private Subscription<PlayerEvents.PlayerPrimaryDown> playerPrimaryDowSubscription;
 
-    private IEnumerator coroutine;
+    private IEnumerator RightCoroutine;
+    private IEnumerator LeftCoroutine;
+
     public float TimeBetweenPointCollection = 0.5f;
 
     public GameObject LeftHandAnchor;
@@ -46,16 +48,49 @@ public class player : MonoBehaviour
             vectors.Add(RightHandAnchor.transform.position);
         }
     }
+
+    private void SpawnTheMesh()
+    {
+        vectors = new List<Vector3>();
+        
+    }
     private void Trigger_performed(PlayerEvents.PlayerTriggerDown e)
     {
         //start a corotine 
-        coroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
-        StartCoroutine(coroutine);
+        if (e.isLeft)
+        {
+            print("left trigger");
+            LeftCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+
+            StartCoroutine(LeftCoroutine);
+
+        }
+        else
+        {
+            print("right trigger");
+            RightCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+
+            StartCoroutine(RightCoroutine);
+
+
+        }
     }
 
     private void Trigger_stopped(PlayerEvents.PlayerTriggerUp e)
     {
-        StopCoroutine(coroutine);
+        if (e.isLeft)
+        {
+            print("Let go of left trigger");
+            StopCoroutine(LeftCoroutine);
+            SpawnTheMesh();
+
+        }
+        else
+        {
+            print("Let go of right trigger");
+            StopCoroutine(RightCoroutine);
+            SpawnTheMesh();
+        }
     }
 
 
@@ -63,10 +98,12 @@ public class player : MonoBehaviour
     {
         if (e.isLeft)
         {
+            print("Let go of left primary");
 
         }
         else
         {
+            print("Let go of right primary");
 
         }
     }
@@ -75,11 +112,11 @@ public class player : MonoBehaviour
     {
         if (e.isLeft)
         {
-
+            print("Left grip");
         }
         else
         {
-
+            print("Right grip");
         }
     }
 
@@ -87,10 +124,12 @@ public class player : MonoBehaviour
     {
         if (e.isLeft)
         {
+            print("Let go of left grip");
 
         }
         else
         {
+            print("Let go of right grip");
 
         }
     }
