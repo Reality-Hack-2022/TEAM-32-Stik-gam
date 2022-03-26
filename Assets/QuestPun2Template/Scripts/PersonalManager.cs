@@ -29,7 +29,7 @@ namespace Networking.Pun2
         int currentToolL;
 
         //Colors
-        public string[] colors = { "Red", "Blue", "Green" };
+        public Color[] colors = { new Color(1.0f,0.35f, 0.79f), new Color(0.44f, 0.7f, 0.87f),new Color(0.2f, 0.98f, 0.76f) };
         public int currentColorIndex = 0;
 
         private Subscription<PlayerEvents.PlayerGripDown> playerGripDownSubscription;
@@ -58,6 +58,7 @@ namespace Networking.Pun2
                 ovrCameraRig.transform.position = spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.position;
                 ovrCameraRig.transform.rotation = spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.rotation;
             }
+            generatedSphere.GetComponent<Renderer>().sharedMaterial.color = colors[currentColorIndex];
         }
 
         private void Start()
@@ -102,7 +103,10 @@ namespace Networking.Pun2
         private void Update()
         {
             if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
+            {
+                generatedSphere.GetComponent<Renderer>().sharedMaterial.color = colors[currentColorIndex];
                 PhotonNetwork.Instantiate(generatedSphere.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
+            }
             if (OVRInput.GetUp(OVRInput.Button.SecondaryIndexTrigger))
             {
                 PhotonNetwork.Instantiate(generatedParent.name, OculusPlayer.instance.rightHand.transform.position, OculusPlayer.instance.rightHand.transform.rotation, 0);
@@ -129,29 +133,29 @@ namespace Networking.Pun2
             //}
 
             //// For changing colors
-            //if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
-            //{
-            //    currentColorIndex--;
-            //    ChangeColor();
-            //}
+            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
+            {
+                currentColorIndex--;
+                ChangeColor();
+            }
 
-            //if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickLeft))
-            //{
-            //    currentColorIndex--;
-            //    ChangeColor();
-            //}
+            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickLeft))
+            {
+                currentColorIndex--;
+                ChangeColor();
+            }
 
-            //if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickRight))
-            //{
-            //    currentColorIndex++;
-            //    ChangeColor();
-            //}
+            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickRight))
+            {
+                currentColorIndex++;
+                ChangeColor();
+            }
 
-            //if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickRight))
-            //{
-            //    currentColorIndex++;
-            //    ChangeColor();
-            //}
+            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickRight))
+            {
+                currentColorIndex++;
+                ChangeColor();
+            }
 
             // For Debug
             if (OVRInput.GetDown(OVRInput.RawButton.B))
