@@ -9,14 +9,22 @@ public class player : MonoBehaviour
     private Subscription<PlayerEvents.PlayerTriggerDown> playerTriggerDownSubscription;
     private Subscription<PlayerEvents.PlayerTriggerUp> playerTriggerUpSubscription;
     private Subscription<PlayerEvents.PlayerPrimaryDown> playerPrimaryDowSubscription;
-    private Subscription<PlayerEvents.PlayerPrimaryUp> playerPrimaryUpSubscription;
 
     private IEnumerator coroutine;
+    public float TimeBetweenPointCollection = 0.5f;
 
+    public GameObject LeftHandAnchor;
+    public GameObject RightHandAnchor;
+    
+    public List<Vector3> vectors = new List<Vector3>();
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerGripDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerGripDown>(Grip_performed);
+        playerGripUpSubscription = EventBus.Subscribe<PlayerEvents.PlayerGripUp>(Grip_stopped);
+        playerTriggerDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerTriggerDown>(Trigger_performed);
+        playerTriggerUpSubscription = EventBus.Subscribe<PlayerEvents.PlayerTriggerUp>(Trigger_stopped);
+        playerPrimaryDowSubscription = EventBus.Subscribe<PlayerEvents.PlayerPrimaryDown>(Primary_performed);
     }
 
     // Update is called once per frame
@@ -25,29 +33,29 @@ public class player : MonoBehaviour
         
     }
 
-
-    private void Trigger_performed(PlayerEvents.PlayerTriggerDown e)
+    private IEnumerator collectCoordsFromHand(bool isLeft, float gapTime)
     {
-        if(e.isLeft)
+        yield return new WaitForSeconds(gapTime);
+        
+        if (isLeft)
         {
-
+            vectors.Add(LeftHandAnchor.transform.position);
         }
         else
         {
-
+            vectors.Add(RightHandAnchor.transform.position);
         }
+    }
+    private void Trigger_performed(PlayerEvents.PlayerTriggerDown e)
+    {
+        //start a corotine 
+        coroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+        StartCoroutine(coroutine);
     }
 
     private void Trigger_stopped(PlayerEvents.PlayerTriggerUp e)
     {
-        if (e.isLeft)
-        {
-
-        }
-        else
-        {
-
-        }
+        StopCoroutine(coroutine);
     }
 
 
