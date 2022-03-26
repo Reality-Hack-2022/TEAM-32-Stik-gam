@@ -29,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
     public void Death() {
         StartCoroutine(RedFade());
         EventBus.Publish(new PlayerEvents.PlayerDeathEvent(PlayerID));
+
     }
 
     IEnumerator RedFade() {

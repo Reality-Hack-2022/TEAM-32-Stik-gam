@@ -128,14 +128,14 @@ public class player : MonoBehaviourPunCallbacks
             if (e.isLeft)
             {
                 print("left trigger");
-                LeftCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+                LeftCoroutine = collectCoordsFromHand(true, TimeBetweenPointCollection);
                 isLeftDrawing = true;
                 StartCoroutine(LeftCoroutine);
             }
             else
             {
                 print("right trigger");
-                RightCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+                RightCoroutine = collectCoordsFromHand(false, TimeBetweenPointCollection);
                 isRightDrawing = true;
                 StartCoroutine(RightCoroutine);
             }
