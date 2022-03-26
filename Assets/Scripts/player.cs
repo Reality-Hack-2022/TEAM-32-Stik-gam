@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +23,10 @@ public class player : MonoBehaviour
     public bool canDraw = true;
     public int playerID = 0;
     public List<Vector3> vectors = new List<Vector3>();
+
+    [SerializeField] GameObject meshSpawner;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,10 +60,11 @@ public class player : MonoBehaviour
     {
         if (canDraw)
         {
-            GameObject newMeshSpawner = new GameObject("Mesh Spawner");
-            MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
-            print("last vector in the input: " + vectors[vectors.Count -1]);
-            meshSpawner.CreateSplineMesh(vectors);
+            //GameObject newMeshSpawner = new GameObject("Mesh Spawner");
+            //MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
+            //print("last vector in the input: " + vectors[vectors.Count -1]);
+            GameObject spawner = PhotonNetwork.Instantiate(meshSpawner.name, Vector3.zero, Quaternion.identity, 0);
+            spawner.GetComponent<MeshSpawner>().CreateSplineMesh(vectors);
         }
 
         vectors = new List<Vector3>();

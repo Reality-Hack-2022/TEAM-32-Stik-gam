@@ -107,10 +107,10 @@ namespace Networking.Pun2
             //if (OVRInput.GetUp(OVRInput.Button.SecondaryThumbstick))
             //    SwitchToolR();
 
-            if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
-            {
-                GenerateCube(); // replace this with our mesh
-            }
+            //if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
+            //{
+            //    GenerateCube(); // replace this with our mesh
+            //}
 
             //// For changing colors
             //if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
