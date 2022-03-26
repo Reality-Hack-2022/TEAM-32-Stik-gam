@@ -17,7 +17,8 @@ public class RoundManager : MonoBehaviour
     public Sprite count_1;
     public Sprite fight_sprite;
     public Sprite draw_sprite;
-    //public GameObject win_UI;
+    public GameObject win_UI;
+    public GameObject lose_UI;
     player[] players;
     List<int> ReadyPlayers;
 
@@ -48,8 +49,9 @@ public class RoundManager : MonoBehaviour
 
         //Assign player_ids
         for (int i = 0; i < PlayerHealths.Length; ++i) {
+            print(i);
             PlayerHealths[i].PlayerID = i;
-            players[i].playerID = i;
+            PlayerHealths[i].gameObject.GetComponent<player>().playerID = i;
         }
         
     }
