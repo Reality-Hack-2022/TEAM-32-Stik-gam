@@ -9,6 +9,7 @@ using System.Linq;
 public class HandAnim : MonoBehaviour
 {
     private Controls controller;
+    public int playerID = -1;
     public bool isLeft = true;
     private List<Vector3> transforms;
 
@@ -72,63 +73,29 @@ public class HandAnim : MonoBehaviour
 
     private void Trigger_performed(InputAction.CallbackContext obj)
     {
-        if (isLeft)
-        {
-        }
-        else
-        {
-
-        }
+        EventBus.Publish(new PlayerEvents.PlayerTriggerDown(playerID, isLeft));
     }
 
     private void Trigger_stopped(InputAction.CallbackContext obj)
     {
-        if (isLeft)
-        {
-
-        }
-        else
-        {
-
-        }
+        EventBus.Publish(new PlayerEvents.PlayerTriggerUp(playerID, isLeft));
     }
 
 
     private void Primary_performed(InputAction.CallbackContext obj)
     {
-        if (isLeft)
-        {
+        EventBus.Publish(new PlayerEvents.PlayerPrimaryDown(playerID, isLeft));
 
-        }
-        else
-        {
-
-        }
     }
 
     private void Grip_performed(InputAction.CallbackContext obj)
     {
-        if (isLeft)
-        {
-
-        }
-        else
-        {
-
-        }
+        EventBus.Publish(new PlayerEvents.PlayerGripDown(playerID, isLeft));
     }
 
     private void Grip_stopped(InputAction.CallbackContext obj)
     {
-        if (isLeft)
-        {
-
-        }
-        else
-        {
-
-        }
+        EventBus.Publish(new PlayerEvents.PlayerGripUp(playerID, isLeft));
     }
-
 
 }
