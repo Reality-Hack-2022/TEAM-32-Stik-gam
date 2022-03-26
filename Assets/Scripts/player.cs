@@ -99,7 +99,16 @@ public class player : MonoBehaviour
         if (e.isLeft)
         {
             print("Let go of left primary");
-
+            Vector3 us = 
+                (LeftHandAnchor.transform.position + RightHandAnchor.transform.position) / 2.0f;
+            Vector3 them = Vector3.zero; //their controllers centroid
+            Vector3 transformationMatrix = Vector3.zero;
+            // Ax = B
+            // we basically need to get their controllers to line up to ours.
+            transformationMatrix.x = them.x / us.x;
+            transformationMatrix.y = them.y / us.y;
+            transformationMatrix.z = them.z / us.z;
+            //now set their location to them * transformationMatrix + some offset. 
         }
         else
         {
