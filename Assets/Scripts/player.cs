@@ -17,7 +17,9 @@ public class player : MonoBehaviour
 
     public GameObject LeftHandAnchor;
     public GameObject RightHandAnchor;
-    
+
+    public bool canDraw = true;
+    public int playerID = 0;
     public List<Vector3> vectors = new List<Vector3>();
     // Start is called before the first frame update
     void Start()
@@ -27,12 +29,6 @@ public class player : MonoBehaviour
         playerTriggerDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerTriggerDown>(Trigger_performed);
         playerTriggerUpSubscription = EventBus.Subscribe<PlayerEvents.PlayerTriggerUp>(Trigger_stopped);
         playerPrimaryDowSubscription = EventBus.Subscribe<PlayerEvents.PlayerPrimaryDown>(Primary_performed);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private IEnumerator collectCoordsFromHand(bool isLeft, float gapTime)
@@ -56,10 +52,12 @@ public class player : MonoBehaviour
 
     private void SpawnTheMesh()
     {
-        GameObject newMeshSpawner = new GameObject("Mesh Spawner");
-        MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
-        if (vectors == null) print("the vectors are null");
-        meshSpawner.CreateSplineMesh(vectors);
+        if (canDraw)
+        {
+            GameObject newMeshSpawner = new GameObject("Mesh Spawner");
+            MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
+            meshSpawner.CreateSplineMesh(vectors);
+        }
 
         vectors = new List<Vector3>();
         
@@ -67,23 +65,27 @@ public class player : MonoBehaviour
     private void Trigger_performed(PlayerEvents.PlayerTriggerDown e)
     {
         //start a corotine 
-        if (e.isLeft)
+        if (canDraw)
         {
-            print("left trigger");
-            LeftCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+            if (e.isLeft)
+            {
+                print("left trigger");
+                LeftCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
 
-            StartCoroutine(LeftCoroutine);
+                StartCoroutine(LeftCoroutine);
 
+            }
+            else
+            {
+                print("right trigger");
+                RightCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+
+                StartCoroutine(RightCoroutine);
+
+
+            }
         }
-        else
-        {
-            print("right trigger");
-            RightCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
-
-            StartCoroutine(RightCoroutine);
-
-
-        }
+        
     }
 
     private void Trigger_stopped(PlayerEvents.PlayerTriggerUp e)
@@ -101,6 +103,7 @@ public class player : MonoBehaviour
             StopCoroutine(RightCoroutine);
             SpawnTheMesh();
         }
+        
     }
 
 

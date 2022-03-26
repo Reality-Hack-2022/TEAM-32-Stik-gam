@@ -51,7 +51,7 @@ public class MeshSpawner : MonoBehaviour
         print("did we succesfully create the spline mesh? " + status);
 
     }
-    
+
     //return true if successfully added
     bool AddSplineMesh(Vector3[] points)
     {
@@ -67,22 +67,23 @@ public class MeshSpawner : MonoBehaviour
         spline.controlPointsList = points;
         //and process them into the spline
         RawMesh rawSplineMesh = spline.QueryResults();
-
         storedRawMesh.Add(rawSplineMesh);
+
         //---------------------GENERATE MESH FILTER-------------------------
         GameObject newSplineMesh = new GameObject("SplineMesh");
         newSplineMesh.AddComponent<SplineMesh>();
         SplineMesh sMesh = newSplineMesh.GetComponent(typeof(SplineMesh)) as SplineMesh;
-        newSplineMesh.transform.parent = transform;
-        storedSplineMesh.Add(sMesh);
+        MeshGeneration meshGen = newSplineMesh.GetComponent(typeof(MeshGeneration)) as MeshGeneration;
+        newSplineMesh.transform.SetParent(gameObject.transform, false);
 
+        storedSplineMesh.Add(sMesh);
         //----------------------GENERATE THE MESH---------------------------
         //set the knot locations + tangenets so we can generate the mesh along the spline
-        meshGenerator.knotLocations = rawSplineMesh.knotLoc;
-        meshGenerator.knotTangents = rawSplineMesh.knotTan;
-        meshGenerator.knotCount = rawSplineMesh.knotCount;
+        meshGen.knotLocations = rawSplineMesh.knotLoc;
+        meshGen.knotTangents = rawSplineMesh.knotTan;
+        meshGen.knotCount = rawSplineMesh.knotCount;
         //create the mesh
-        Mesh generated = meshGenerator.CreateMesh();//(newSplineMesh.mFilter, newSplineMesh.mRenderer);
+        Mesh generated = meshGen.CreateMesh();//(newSplineMesh.mFilter, newSplineMesh.mRenderer);
         sMesh.mFilter.mesh = generated;
         meshes.Add(generated);
 

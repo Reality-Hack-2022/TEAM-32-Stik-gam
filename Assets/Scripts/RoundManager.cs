@@ -9,16 +9,21 @@ public class RoundManager : MonoBehaviour
     public float PrepTime = 30f;
     PlayerHealth[] PlayerHealths;
     Subscription<PlayerEvents.PlayerDeathEvent> playerDeathSubscription;
+    Subscription<PlayerEvents.PlayerToggleDraw> playerToggleDrawSubscription;
     public Sprite count_3;
     public Sprite count_2;
     public Sprite count_1;
 
+    player[] players;
     // Start is called before the first frame update
     void Start()
     {
         playerDeathSubscription = EventBus.Subscribe<PlayerEvents.PlayerDeathEvent>(PlayerDied);
         PlayerHealths = GameObject.FindObjectsOfType<PlayerHealth>(); // Change this from start to whenever both players have joined
         StartCoroutine(PrepPhaseUIShow());
+        playerToggleDrawSubscription = EventBus.Subscribe<PlayerEvents.PlayerToggleDraw>(DisablePlayerDrawing);
+
+        players = GameObject.FindObjectsOfType<player>(); 
     }
 
     void PlayerDied(PlayerEvents.PlayerDeathEvent e) {
@@ -72,5 +77,17 @@ public class RoundManager : MonoBehaviour
 
     void BattlePhaseUIShow() { 
     
+    }
+
+    void DisablePlayerDrawing(PlayerEvents.PlayerToggleDraw e)
+    {
+        foreach (player user in players)
+        {
+            if (e.playerID == user.playerID)
+            {
+                user.canDraw = false;
+            }
+        }
+
     }
 }
