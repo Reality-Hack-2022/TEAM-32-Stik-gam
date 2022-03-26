@@ -5,9 +5,20 @@ using UnityEngine;
 public class explode : MonoBehaviour
 {
     public GameObject explodePrefab;
-    void OnCollisionEnter(Collision collision)
+    private Subscription<PlayerEvents.PlayerDeathEvent> playerDeathSubscription;
+
+
+    private void Start()
+    {
+        playerDeathSubscription = EventBus.Subscribe<PlayerEvents.PlayerDeathEvent>(Death);
+
+    }
+
+    private void Death(PlayerEvents.PlayerTriggerDown e)
     {
         gameObject.transform.GetChild(0).GetComponent<MeshFilter>().mesh = null;
         Instantiate(gameObject, transform);
     }
+
+    
 }
