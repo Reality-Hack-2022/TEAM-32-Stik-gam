@@ -72,6 +72,8 @@ namespace Networking.Pun2
                 if (i > 0)
                     toolsL[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
             }
+
+
         }
 
         //Detects input from Thumbstick to switch "hand tools"

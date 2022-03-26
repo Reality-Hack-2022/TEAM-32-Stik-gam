@@ -51,6 +51,10 @@ public class player : MonoBehaviour
 
     private void SpawnTheMesh()
     {
+        GameObject newMeshSpawner = new GameObject("Mesh Spawner");
+        MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
+        meshSpawner.CreateSplineMesh(vectors);
+
         vectors = new List<Vector3>();
         
     }
