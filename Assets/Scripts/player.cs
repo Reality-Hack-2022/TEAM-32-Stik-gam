@@ -56,6 +56,7 @@ public class player : MonoBehaviour
         {
             GameObject newMeshSpawner = new GameObject("Mesh Spawner");
             MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
+            print("last vector in the input: " + vectors[vectors.Count -1]);
             meshSpawner.CreateSplineMesh(vectors);
         }
 
@@ -79,6 +80,8 @@ public class player : MonoBehaviour
             {
                 print("right trigger");
                 RightCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
+                
+
 
                 StartCoroutine(RightCoroutine);
 
@@ -101,6 +104,7 @@ public class player : MonoBehaviour
         {
             print("Let go of right trigger");
             StopCoroutine(RightCoroutine);
+
             SpawnTheMesh();
         }
         

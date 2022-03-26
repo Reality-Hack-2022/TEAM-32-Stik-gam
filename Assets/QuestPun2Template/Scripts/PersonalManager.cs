@@ -19,11 +19,17 @@ namespace Networking.Pun2
         [SerializeField] Transform[] spawnPoints;
         [SerializeField] GameObject generatedCube;
 
+        public bool IsCalibrating = false;
+
         //Tools
         List<GameObject> toolsR;
         List<GameObject> toolsL;
         int currentToolR;
         int currentToolL;
+
+        //Colors
+        public string[] colors = { "Red", "Blue", "Green" };
+        public int currentColorIndex = 0;
 
         private void Awake()
         {
@@ -90,7 +96,45 @@ namespace Networking.Pun2
             {
                 GenerateCube();
             }
+
+            // For changing colors
+            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
+            {
+                currentColorIndex--;
+                ChangeColor();
+            }
+
+            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickLeft))
+            {
+                currentColorIndex--;
+                ChangeColor();
+            }
+
+            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickRight))
+            {
+                currentColorIndex++;
+                ChangeColor();
+            }
+
+            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickRight))
+            {
+                currentColorIndex++;
+                ChangeColor();
+            }
+
+            // For Debug
+            if (OVRInput.GetDown(OVRInput.RawButton.B))
+            {
+                IsCalibrating = true;
+            }
         }
+
+        void ChangeColor()
+        {
+            GameObject[] tanks = GameObject.FindGameObjectsWithTag("Tanks");
+
+        }
+
 
         //disables current tool and enables next tool
         void SwitchToolR()
