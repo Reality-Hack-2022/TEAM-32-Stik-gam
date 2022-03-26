@@ -19,8 +19,7 @@ public class MeshGeneration : MonoBehaviour
     //specifer for the object, probably passed in later
     //INPUT INTO MESH GEN
     public int x_size = 7; //cylinder division count
-    public int z_size = 10; //data points scaled by division count
-    public int radius = 10;
+    public float radius;
 
     //mesh definitions
     private Mesh mesh;
@@ -34,7 +33,7 @@ public class MeshGeneration : MonoBehaviour
     private void CreateShape()
     {
         // initialize the array to the size
-        int z_size_new = knotCount - 7;  //TODO: NEED TO ADJUST THIS IN FINAL  
+        int z_size_new = knotCount - 1;  //TODO: NEED TO ADJUST THIS IN FINAL  
         int size = (x_size + 1) * (z_size_new + 1) + 2; //plus 2 for the start & end
         vertices = new Vector3[size];
         triangles = new int[(x_size * (z_size_new + 1) + x_size * 2) * 6]; //?? works lol
@@ -47,14 +46,14 @@ public class MeshGeneration : MonoBehaviour
         {
             for (int x = 0; x < x_size + 1; x++)
             {
-                  
+
                 float angle = ((float)x) / x_size * Mathf.PI * 2;
                 float x1 = Mathf.Sin(-angle) * radius;
                 float y1 = Mathf.Cos(-angle) * radius;
-                Vector3 vec = new Vector3(x1, z, y1);
-                rot.SetFromToRotation(Vector3.up, knotTangents[z]); 
-                vec = rot* vec;
-                vec += knotLocations[z];
+                Vector3 vec = new Vector3(x1, 0, y1);
+                rot.SetFromToRotation(Vector3.up, knotTangents[z]);
+                vec = rot * vec;
+                vec = vec + knotLocations[z];
                 vertices[i] = vec;
                 i++;
             }
@@ -70,7 +69,7 @@ public class MeshGeneration : MonoBehaviour
             sum_end += vertices[i - 1 - j];
         }
         Vector3 firstvert = sum_start / (float)(x_size + 1);
-        Vector3 lastvert = sum_end / (float)( x_size + 1);
+        Vector3 lastvert = sum_end / (float)(x_size + 1);
         vertices[0] = firstvert;
         vertices[i] = lastvert;
 
@@ -107,10 +106,10 @@ public class MeshGeneration : MonoBehaviour
             //back cap
             triangles[tris] = vertx;
             triangles[tris + 1] = vertx - 1 - (x);
-            triangles[tris + 2] = vertx - 1 - ((x + 1) % x_size);  
+            triangles[tris + 2] = vertx - 1 - ((x + 1) % x_size);
             tris += 3;
         }
-            
+
         UpdateMesh();
 
     }
@@ -137,23 +136,6 @@ public class MeshGeneration : MonoBehaviour
         return mesh;
     }
 
-    private void OnDrawGizmos()
-    {
-        if (vertices == null)
-        {
-            return;
-        }
-
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            Gizmos.DrawSphere(vertices[i], .1f);
-        }
-
-        triangles = new int[3];
-        triangles[0] = 0;
-        triangles[1] = x_size + 1;
-        triangles[2] = 1;
-    }
 
 }
 

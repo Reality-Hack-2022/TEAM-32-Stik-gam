@@ -45,12 +45,15 @@ public class Hands : MonoBehaviour
         if (isLeft)
         {
             controller.VR.Left_Primary.performed += Primary_performed;
+            controller.VR.Left_Secondary.performed += Secondary_performed;
 
             controller.VR.Left_Trigger.performed += Trigger_performed;
             controller.VR.Left_Trigger.canceled += Trigger_stopped; //decrement this???
 
             controller.VR.Left_Grip.performed  += Grip_performed;
             controller.VR.Left_Grip.canceled += Grip_stopped; //decrement this???
+
+
 
         }
         else //we're right handed...
@@ -60,9 +63,13 @@ public class Hands : MonoBehaviour
             controller.VR.Right_Grip.canceled += Grip_stopped;
 
             controller.VR.Right_Primary.performed += Primary_performed;
+            controller.VR.Right_Secondary.performed += Secondary_performed;
+
 
             controller.VR.Right_Trigger.performed += Trigger_performed;
             controller.VR.Right_Trigger.canceled += Trigger_stopped; //decrement this???
+
+
 
         }
 
@@ -85,6 +92,12 @@ public class Hands : MonoBehaviour
     private void Primary_performed(InputAction.CallbackContext obj)
     {
         EventBus.Publish(new PlayerEvents.PlayerPrimaryDown(playerID, isLeft));
+
+    }
+
+    private void Secondary_performed(InputAction.CallbackContext obj)
+    {
+        EventBus.Publish(new PlayerEvents.PlayerSecondaryDown(playerID, isLeft));
 
     }
 

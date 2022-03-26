@@ -687,6 +687,7 @@ MonoBehaviour:
   - {fileID: 1614599433}
   - {fileID: 790967183}
   - {fileID: 1920002354}
+  generatedCube: {fileID: 0}
 --- !u!4 &1310519770
 Transform:
   m_ObjectHideFlags: 0
@@ -1354,3 +1355,48 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 654d6ec01a0b9dd47acedbfc0838bb71, type: 3}
+--- !u!1 &6891588924801027439 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5351334270037767748, guid: 654d6ec01a0b9dd47acedbfc0838bb71, type: 3}
+  m_PrefabInstance: {fileID: 6891588924801027438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6891588924801027440 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5351334270037816158, guid: 654d6ec01a0b9dd47acedbfc0838bb71, type: 3}
+  m_PrefabInstance: {fileID: 6891588924801027438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6891588924801027441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5351334270037762256, guid: 654d6ec01a0b9dd47acedbfc0838bb71, type: 3}
+  m_PrefabInstance: {fileID: 6891588924801027438}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6891588924801027442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6891588924801027440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cc8e4a269e6e545aef060882848b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeBetweenPointCollection: 0.5
+  LeftHandAnchor: {fileID: 6891588924801027439}
+  RightHandAnchor: {fileID: 6891588924801027441}
+  vectors: []
+--- !u!114 &6891588924801027443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6891588924801027440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 207c7f32691c89547b3feb2723b2acc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: -1
+  isLeft: 0

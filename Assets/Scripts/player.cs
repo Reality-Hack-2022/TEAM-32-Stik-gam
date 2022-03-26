@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +27,10 @@ public class player : MonoBehaviour
     public bool canDraw = true;
     public int playerID = 0;
     public List<Vector3> vectors = new List<Vector3>();
+
+    [SerializeField] GameObject meshSpawner;
+
+
     // Start is called before the first frame update
     
     public float inkLevel_Stick = 100.0f;
@@ -44,15 +50,20 @@ public class player : MonoBehaviour
 
     private IEnumerator collectCoordsFromHand(bool isLeft, float gapTime)
     {
-        yield return new WaitForSeconds(gapTime);
-        
-        if (isLeft)
-        {
-            vectors.Add(LeftHandAnchor.transform.position);
-        }
-        else
-        {
-            vectors.Add(RightHandAnchor.transform.position);
+        while (true)
+        { 
+            if (isLeft)
+            {
+                print("Hello from the left coroutiner");
+
+                vectors.Add(LeftHandAnchor.transform.position);
+            }
+            else
+            {
+                print("Hello from the right coroutiner");
+                vectors.Add(RightHandAnchor.transform.position);
+            }
+            yield return new WaitForSeconds(gapTime);
         }
     }
 
@@ -88,9 +99,11 @@ public class player : MonoBehaviour
     {
         if (canDraw)
         {
-            GameObject newMeshSpawner = new GameObject("Mesh Spawner");
-            MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
-            meshSpawner.CreateSplineMesh(vectors);
+            //GameObject newMeshSpawner = new GameObject("Mesh Spawner");
+            //MeshSpawner meshSpawner = newMeshSpawner.AddComponent<MeshSpawner>();
+            //print("last vector in the input: " + vectors[vectors.Count -1]);
+            GameObject spawner = PhotonNetwork.Instantiate(meshSpawner.name, Vector3.zero, Quaternion.identity, 0);
+            spawner.GetComponent<MeshSpawner>().CreateSplineMesh(vectors);
         }
 
         vectors = new List<Vector3>();
@@ -135,6 +148,7 @@ public class player : MonoBehaviour
         {
             print("Let go of right trigger");
             StopCoroutine(RightCoroutine);
+
             SpawnTheMesh();
             isRightDrawing=false;
         }
