@@ -22,6 +22,7 @@ namespace Networking.Pun2
                         break;
 
                     case 2: //left
+                        //Quaternion tmpRotation = new Quaternion(OculusPlayer.instance.leftHand.transform.rotation.x - 90.0f, OculusPlayer.instance.leftHand.transform.rotation.y - 90.0f, OculusPlayer.instance.leftHand.transform.rotation.z, 1);
                         transform.position = OculusPlayer.instance.leftHand.transform.position;
                         transform.rotation = OculusPlayer.instance.leftHand.transform.rotation;
                         break;
@@ -29,6 +30,11 @@ namespace Networking.Pun2
                     case 3: //right
                         transform.position = OculusPlayer.instance.rightHand.transform.position;
                         transform.rotation = OculusPlayer.instance.rightHand.transform.rotation;
+                        break;
+
+                    case 4: // body
+                        transform.position = OculusPlayer.instance.body.transform.position;
+                        transform.rotation = OculusPlayer.instance.body.transform.rotation;
                         break;
                 }
             }
