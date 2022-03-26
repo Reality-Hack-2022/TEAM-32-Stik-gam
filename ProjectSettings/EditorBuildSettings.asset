@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/QuestPun2Template/Scenes/Photon2Lobby.unity
     guid: d498e2505ad6e4a44ab1a1d43767d493
   - enabled: 0
@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/QuestPun2Template/Scenes/Photon2RoomHandTracking.unity
     guid: 71cf2ea53ba23b748841e81d2bcf963c
+  - enabled: 0
+    path: Assets/Scenes/RenderingTests.unity
+    guid: f715db51a0bc7654d837953f3cae0e99
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 0526c867eb61b44b894462581a291588, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: ff5e4968261d1394a8e29ab2574170e5, type: 2}
