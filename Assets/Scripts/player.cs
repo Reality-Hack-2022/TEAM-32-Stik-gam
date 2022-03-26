@@ -14,6 +14,10 @@ public class player : MonoBehaviour
 
     private IEnumerator RightCoroutine;
     private IEnumerator LeftCoroutine;
+    private IEnumerator DrainCoroutine;
+
+    private bool isRightDrawing = false;
+    private bool isLeftDrawing = false;
 
     public float TimeBetweenPointCollection = 0.5f;
 
@@ -28,6 +32,13 @@ public class player : MonoBehaviour
 
 
     // Start is called before the first frame update
+    
+    public float inkLevel_Stick = 100.0f;
+    public float inkLevel_Blade = 100.0f;
+    public float inkMax = 100.0f;
+    public float inkDrainAmount = 5.0f;
+    public int inkID = 0;
+    
     void Start()
     {
         playerGripDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerGripDown>(Grip_performed);
@@ -56,6 +67,34 @@ public class player : MonoBehaviour
         }
     }
 
+    private IEnumerator DrainInk()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if (inkID == 0)
+        {
+            inkLevel_Stick -= inkDrainAmount;
+        }
+        else
+        {
+            inkLevel_Blade -= inkDrainAmount;
+        }
+        if (inkLevel_Blade <= 0 && inkID == 1)
+        {
+            if (isRightDrawing)
+                StopCoroutine(RightCoroutine);
+            if (isLeftDrawing)
+                StopCoroutine(LeftCoroutine);
+            StopCoroutine(DrainCoroutine);
+        }
+        else if (inkLevel_Stick <= 0 && inkID == 0)
+        {
+            if (isRightDrawing)
+                StopCoroutine(RightCoroutine);
+            if (isLeftDrawing)
+                StopCoroutine(LeftCoroutine);
+            StopCoroutine(DrainCoroutine);
+        }
+    }
     private void SpawnTheMesh()
     {
         if (canDraw)
@@ -79,21 +118,18 @@ public class player : MonoBehaviour
             {
                 print("left trigger");
                 LeftCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
-
+                isLeftDrawing = true;
                 StartCoroutine(LeftCoroutine);
-
             }
             else
             {
                 print("right trigger");
                 RightCoroutine = collectCoordsFromHand(e.isLeft, TimeBetweenPointCollection);
-                
-
-
+                isRightDrawing = true;
                 StartCoroutine(RightCoroutine);
-
-
             }
+            DrainCoroutine = DrainInk();
+            StartCoroutine(DrainCoroutine);
         }
         
     }
@@ -105,6 +141,7 @@ public class player : MonoBehaviour
             print("Let go of left trigger");
             StopCoroutine(LeftCoroutine);
             SpawnTheMesh();
+            isLeftDrawing=false;
 
         }
         else
@@ -113,32 +150,29 @@ public class player : MonoBehaviour
             StopCoroutine(RightCoroutine);
 
             SpawnTheMesh();
+            isRightDrawing=false;
         }
-        
+        StopCoroutine(DrainCoroutine);
     }
 
 
     private void Primary_performed(PlayerEvents.PlayerPrimaryDown e)
     {
-        if (e.isLeft)
-        {
-            print("Let go of left primary");
-            Vector3 us = 
-                (LeftHandAnchor.transform.position + RightHandAnchor.transform.position) / 2.0f;
-            Vector3 them = Vector3.zero; //their controllers centroid
-            Vector3 transformationMatrix = Vector3.zero;
-            // Ax = B
-            // we basically need to get their controllers to line up to ours.
-            transformationMatrix.x = them.x / us.x;
-            transformationMatrix.y = them.y / us.y;
-            transformationMatrix.z = them.z / us.z;
-            //now set their location to them * transformationMatrix + some offset. 
-        }
-        else
-        {
-            print("Let go of right primary");
-
-        }
+        
+        /*print("Let go of left primary");
+        Vector3 us = 
+            (LeftHandAnchor.transform.position + RightHandAnchor.transform.position) / 2.0f;
+        Vector3 them = Vector3.zero; //their controllers centroid
+        Vector3 transformationMatrix = Vector3.zero;
+        // Ax = B
+        // we basically need to get their controllers to line up to ours.
+        transformationMatrix.x = them.x / us.x;
+        transformationMatrix.y = them.y / us.y;
+        transformationMatrix.z = them.z / us.z;
+        //now set their location to them * transformationMatrix + some offset. */
+        if (inkID > 1) inkID = 0;
+        else inkID++;
+        
     }
 
     private void Grip_performed(PlayerEvents.PlayerGripDown e)
