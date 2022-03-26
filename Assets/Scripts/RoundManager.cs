@@ -17,7 +17,8 @@ public class RoundManager : MonoBehaviour
     public Sprite count_1;
     public Sprite fight_sprite;
     public Sprite draw_sprite;
-    //public GameObject win_UI;
+    public GameObject win_UI;
+    public GameObject lose_UI;
     player[] players;
     List<int> ReadyPlayers;
 
