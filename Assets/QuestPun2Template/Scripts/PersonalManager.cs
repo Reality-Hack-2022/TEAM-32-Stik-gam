@@ -132,32 +132,7 @@ namespace Networking.Pun2
             //if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
             //{
             //    GenerateCube(); // replace this with our mesh
-            //}
-
-            //// For changing colors
-            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
-            {
-                currentColorIndex--;
-                ChangeColor();
-            }
-
-            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickLeft))
-            {
-                currentColorIndex--;
-                ChangeColor();
-            }
-
-            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickRight))
-            {
-                currentColorIndex++;
-                ChangeColor();
-            }
-
-            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickRight))
-            {
-                currentColorIndex++;
-                ChangeColor();
-            }
+            //}           
 
             // For Debug
             if (OVRInput.GetDown(OVRInput.RawButton.B))
