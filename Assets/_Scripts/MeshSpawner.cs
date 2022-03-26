@@ -10,7 +10,7 @@ public class MeshSpawner : MonoBehaviour
     //DEFINITIONAL ELEMENTS
     public List<RawMesh> storedRawMesh; 
     public int meshCount = 0;
-    public float radius = 10.0f;
+    public float radius = 0.05f;
 
     //GENERATOR OPERATORS
     CatmullRomSpline spline;
@@ -36,11 +36,22 @@ public class MeshSpawner : MonoBehaviour
         meshes = new List<Mesh>();
 
     }
-    void Start()
+
+
+    public void CreateSplineMesh(List<Vector3> vectors)
+    {
+        Vector3[] tt = new Vector3[vectors.Count];
+        for (int i = 0; i < vectors.Count; i++)
+        {
+            tt[i] = vectors[i];
+        }
+        AddSplineMesh(tt);
+    }
+/*    void Start()
     {
 
         //Run it on test coordinates
-        /*
+        *//*
         Vector3[] testtest = new Vector3[transforms.Length];
         Vector3[] tt = new Vector3[transforms.Length];
         Vector3 offset = new Vector3(0.0f, 40.0f, 0.0f);
@@ -54,7 +65,7 @@ public class MeshSpawner : MonoBehaviour
         
         AddSplineMesh(testtest);
         AddSplineMesh(tt);
-        */
+        *//*
         List<Vector3> vectors = new List<Vector3>();
         vectors.Add(new Vector3(-0.04f, 1.18f, -1.11f));
         vectors.Add(new Vector3(-0.00f, 1.15f, -1.10f));
@@ -64,16 +75,13 @@ public class MeshSpawner : MonoBehaviour
         vectors.Add(new Vector3(0.13f, 1.14f, -1.07f));
 
         //convert to list 
-        Vector3[] tt = new Vector3[vectors.Count];
-        for (int i = 0; i < vectors.Count; i++)
-        {
-            tt[i] = vectors[i];
-        }
-        AddSplineMesh(tt);
+
 
         //generateCollision();
     }
-    
+    */
+
+
     //return true if successfully added
     bool AddSplineMesh(Vector3[] points)
     {
