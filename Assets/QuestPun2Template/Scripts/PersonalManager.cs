@@ -101,24 +101,28 @@ namespace Networking.Pun2
             if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
             {
                 currentColorIndex--;
+                if (currentColorIndex < 0) currentColorIndex = colors.Length - 1;
                 ChangeColor();
             }
 
             if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickLeft))
             {
                 currentColorIndex--;
+                if (currentColorIndex < 0) currentColorIndex = colors.Length - 1;
                 ChangeColor();
             }
 
             if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickRight))
             {
                 currentColorIndex++;
+                if (currentColorIndex > 2) currentColorIndex = 0;
                 ChangeColor();
             }
 
             if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickRight))
             {
                 currentColorIndex++;
+                if (currentColorIndex < 0) currentColorIndex = 0;
                 ChangeColor();
             }
 
@@ -132,10 +136,15 @@ namespace Networking.Pun2
         void ChangeColor()
         {
             GameObject[] tanks = GameObject.FindGameObjectsWithTag("Tanks");
+            for (var i = 0; i < tanks.Length; i++)
+            {
+                if (tanks[i].GetComponentInParent<Photon.Pun.PhotonView>().IsMine)
+                {
+                    tanks[i].transform.GetChild(0).gameObject.GetComponentInChildren<Renderer>().material.SetColor("_DeepColor", Color.green);
+                }
+            }
 
         }
-
-
         //disables current tool and enables next tool
         void SwitchToolR()
         {

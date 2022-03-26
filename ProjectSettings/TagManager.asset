@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RightHands
   - Hands
+  - Tanks
   layers:
   - Default
   - TransparentFX
