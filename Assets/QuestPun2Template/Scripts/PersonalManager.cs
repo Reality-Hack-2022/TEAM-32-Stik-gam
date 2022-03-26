@@ -31,6 +31,14 @@ namespace Networking.Pun2
         public string[] colors = { "Red", "Blue", "Green" };
         public int currentColorIndex = 0;
 
+        private Subscription<PlayerEvents.PlayerGripDown> playerGripDownSubscription;
+        private Subscription<PlayerEvents.PlayerGripUp> playerGripUpSubscription;
+        private Subscription<PlayerEvents.PlayerTriggerDown> playerTriggerDownSubscription;
+        private Subscription<PlayerEvents.PlayerTriggerUp> playerTriggerUpSubscription;
+        private Subscription<PlayerEvents.PlayerPrimaryDown> playerPrimaryDowSubscription;
+        private Subscription<PlayerEvents.PlayerSecondaryDown> playerSecondaryDownSubscription;
+
+
         private void Awake()
         {
             /// If the game starts in Room scene, and is not connected, sends the player back to Lobby scene to connect first.
@@ -44,7 +52,7 @@ namespace Networking.Pun2
             toolsR = new List<GameObject>();
             toolsL = new List<GameObject>();
 
-            if(PhotonNetwork.LocalPlayer.ActorNumber <= spawnPoints.Length)
+            if (PhotonNetwork.LocalPlayer.ActorNumber <= spawnPoints.Length)
             {
                 ovrCameraRig.transform.position = spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.position;
                 ovrCameraRig.transform.rotation = spawnPoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].transform.rotation;
@@ -53,6 +61,12 @@ namespace Networking.Pun2
 
         private void Start()
         {
+            playerGripDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerGripDown>(Grip_performed);
+            playerGripUpSubscription = EventBus.Subscribe<PlayerEvents.PlayerGripUp>(Grip_stopped);
+            playerTriggerDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerTriggerDown>(Trigger_performed);
+            playerTriggerUpSubscription = EventBus.Subscribe<PlayerEvents.PlayerTriggerUp>(Trigger_stopped);
+            playerPrimaryDowSubscription = EventBus.Subscribe<PlayerEvents.PlayerPrimaryDown>(Primary_performed);
+            playerSecondaryDownSubscription = EventBus.Subscribe<PlayerEvents.PlayerSecondaryDown>(Secondary_performed);
             //Instantiate Head
             GameObject obj = (PhotonNetwork.Instantiate(headPrefab.name, OculusPlayer.instance.head.transform.position, OculusPlayer.instance.head.transform.rotation, 0));
             //obj.GetComponent<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
@@ -66,7 +80,7 @@ namespace Networking.Pun2
             {
                 toolsR.Add(obj.transform.GetChild(i).gameObject);
                 //obj.transform.GetComponentInChildren<SetColor>().SetColorRPC(PhotonNetwork.LocalPlayer.ActorNumber);
-                if(i > 0)
+                if (i > 0)
                     toolsR[i].transform.parent.GetComponent<PhotonView>().RPC("DisableTool", RpcTarget.AllBuffered, 1);
             }
 
@@ -86,41 +100,42 @@ namespace Networking.Pun2
         //Detects input from Thumbstick to switch "hand tools"
         private void Update()
         {
-            if (OVRInput.GetUp(OVRInput.Button.PrimaryThumbstick))
-                SwitchToolL();
+            //not in scope/can't use :(
+            //if (OVRInput.GetUp(OVRInput.Button.PrimaryThumbstick))
+            //    SwitchToolL();
 
-            if (OVRInput.GetUp(OVRInput.Button.SecondaryThumbstick))
-                SwitchToolR();
+            //if (OVRInput.GetUp(OVRInput.Button.SecondaryThumbstick))
+            //    SwitchToolR();
 
-            if(OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
+            if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger))
             {
-                GenerateCube();
+                GenerateCube(); // replace this with our mesh
             }
 
-            // For changing colors
-            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
-            {
-                currentColorIndex--;
-                ChangeColor();
-            }
+            //// For changing colors
+            //if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickLeft))
+            //{
+            //    currentColorIndex--;
+            //    ChangeColor();
+            //}
 
-            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickLeft))
-            {
-                currentColorIndex--;
-                ChangeColor();
-            }
+            //if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickLeft))
+            //{
+            //    currentColorIndex--;
+            //    ChangeColor();
+            //}
 
-            if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickRight))
-            {
-                currentColorIndex++;
-                ChangeColor();
-            }
+            //if (OVRInput.GetDown(OVRInput.RawButton.LThumbstickRight))
+            //{
+            //    currentColorIndex++;
+            //    ChangeColor();
+            //}
 
-            if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickRight))
-            {
-                currentColorIndex++;
-                ChangeColor();
-            }
+            //if (OVRInput.GetDown(OVRInput.RawButton.RThumbstickRight))
+            //{
+            //    currentColorIndex++;
+            //    ChangeColor();
+            //}
 
             // For Debug
             if (OVRInput.GetDown(OVRInput.RawButton.B))
@@ -171,6 +186,87 @@ namespace Networking.Pun2
         private void OnApplicationQuit()
         {
             StopAllCoroutines();
+        }
+
+        private void Trigger_performed(PlayerEvents.PlayerTriggerDown e)
+        {
+            //start a corotine 
+
+            if (e.isLeft)
+            {
+
+            }
+            else
+            {
+
+            }
+
+
+        }
+
+        private void Trigger_stopped(PlayerEvents.PlayerTriggerUp e)
+        {
+            if (e.isLeft)
+            {
+
+
+            }
+            else
+            {
+
+            }
+
+        }
+
+
+        private void Primary_performed(PlayerEvents.PlayerPrimaryDown e)
+        {
+            if (e.isLeft)
+            {
+                currentColorIndex--;
+                ChangeColor();
+            }
+            else
+            {
+                currentColorIndex--;
+                ChangeColor();
+            }
+        }
+
+        private void Secondary_performed(PlayerEvents.PlayerSecondaryDown e)
+        {
+            if (e.isLeft)
+            {
+                currentColorIndex++;
+                ChangeColor();
+            }
+            else
+            {
+                currentColorIndex++;
+                ChangeColor();
+            }
+        }
+
+        private void Grip_performed(PlayerEvents.PlayerGripDown e)
+        {
+            if (e.isLeft)
+            {
+            }
+            else
+            {
+            }
+        }
+
+        private void Grip_stopped(PlayerEvents.PlayerGripUp e)
+        {
+            if (e.isLeft)
+            {
+
+            }
+            else
+            {
+
+            }
         }
     }
 }

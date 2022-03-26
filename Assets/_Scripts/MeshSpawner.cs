@@ -47,40 +47,6 @@ public class MeshSpawner : MonoBehaviour
         }
         AddSplineMesh(tt);
     }
-/*    void Start()
-    {
-
-        //Run it on test coordinates
-        *//*
-        Vector3[] testtest = new Vector3[transforms.Length];
-        Vector3[] tt = new Vector3[transforms.Length];
-        Vector3 offset = new Vector3(0.0f, 40.0f, 0.0f);
-        for (int i = 0; i < transforms.Length; i++)
-        {
-            testtest[i] = transforms[i].position + offset;
-            tt[i] = transforms[i].position;
-        }
-
-
-        
-        AddSplineMesh(testtest);
-        AddSplineMesh(tt);
-        *//*
-        List<Vector3> vectors = new List<Vector3>();
-        vectors.Add(new Vector3(-0.04f, 1.18f, -1.11f));
-        vectors.Add(new Vector3(-0.00f, 1.15f, -1.10f));
-        vectors.Add(new Vector3(0.06f, 1.15f, -1.08f));
-        vectors.Add(new Vector3(0.14f, 1.15f, -1.08f));
-        vectors.Add(new Vector3(0.14f, 1.14f, -1.08f));
-        vectors.Add(new Vector3(0.13f, 1.14f, -1.07f));
-
-        //convert to list 
-
-
-        //generateCollision();
-    }
-    */
-
 
     //return true if successfully added
     bool AddSplineMesh(Vector3[] points)

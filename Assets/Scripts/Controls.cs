@@ -80,6 +80,24 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right_Secondary"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1f09c83-1269-4e00-9473-1951ba77b6b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left_Secondary"",
+                    ""type"": ""Button"",
+                    ""id"": ""839dba29-cf4a-4755-b792-7191ac321e76"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -148,6 +166,28 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Left_Primary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c85eaf7-c52a-431e-b937-275aa9349951"",
+                    ""path"": ""<OculusTouchController>{RightHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right_Secondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""993fef68-6d27-41ad-9d4b-a9d6632e14ae"",
+                    ""path"": ""<OculusTouchController>{LeftHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left_Secondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -162,6 +202,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_VR_Right_Trigger = m_VR.FindAction("Right_Trigger", throwIfNotFound: true);
         m_VR_Right_Primary = m_VR.FindAction("Right_Primary", throwIfNotFound: true);
         m_VR_Left_Primary = m_VR.FindAction("Left_Primary", throwIfNotFound: true);
+        m_VR_Right_Secondary = m_VR.FindAction("Right_Secondary", throwIfNotFound: true);
+        m_VR_Left_Secondary = m_VR.FindAction("Left_Secondary", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +269,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_VR_Right_Trigger;
     private readonly InputAction m_VR_Right_Primary;
     private readonly InputAction m_VR_Left_Primary;
+    private readonly InputAction m_VR_Right_Secondary;
+    private readonly InputAction m_VR_Left_Secondary;
     public struct VRActions
     {
         private @Controls m_Wrapper;
@@ -237,6 +281,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Right_Trigger => m_Wrapper.m_VR_Right_Trigger;
         public InputAction @Right_Primary => m_Wrapper.m_VR_Right_Primary;
         public InputAction @Left_Primary => m_Wrapper.m_VR_Left_Primary;
+        public InputAction @Right_Secondary => m_Wrapper.m_VR_Right_Secondary;
+        public InputAction @Left_Secondary => m_Wrapper.m_VR_Left_Secondary;
         public InputActionMap Get() { return m_Wrapper.m_VR; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -264,6 +310,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Left_Primary.started -= m_Wrapper.m_VRActionsCallbackInterface.OnLeft_Primary;
                 @Left_Primary.performed -= m_Wrapper.m_VRActionsCallbackInterface.OnLeft_Primary;
                 @Left_Primary.canceled -= m_Wrapper.m_VRActionsCallbackInterface.OnLeft_Primary;
+                @Right_Secondary.started -= m_Wrapper.m_VRActionsCallbackInterface.OnRight_Secondary;
+                @Right_Secondary.performed -= m_Wrapper.m_VRActionsCallbackInterface.OnRight_Secondary;
+                @Right_Secondary.canceled -= m_Wrapper.m_VRActionsCallbackInterface.OnRight_Secondary;
+                @Left_Secondary.started -= m_Wrapper.m_VRActionsCallbackInterface.OnLeft_Secondary;
+                @Left_Secondary.performed -= m_Wrapper.m_VRActionsCallbackInterface.OnLeft_Secondary;
+                @Left_Secondary.canceled -= m_Wrapper.m_VRActionsCallbackInterface.OnLeft_Secondary;
             }
             m_Wrapper.m_VRActionsCallbackInterface = instance;
             if (instance != null)
@@ -286,6 +338,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Left_Primary.started += instance.OnLeft_Primary;
                 @Left_Primary.performed += instance.OnLeft_Primary;
                 @Left_Primary.canceled += instance.OnLeft_Primary;
+                @Right_Secondary.started += instance.OnRight_Secondary;
+                @Right_Secondary.performed += instance.OnRight_Secondary;
+                @Right_Secondary.canceled += instance.OnRight_Secondary;
+                @Left_Secondary.started += instance.OnLeft_Secondary;
+                @Left_Secondary.performed += instance.OnLeft_Secondary;
+                @Left_Secondary.canceled += instance.OnLeft_Secondary;
             }
         }
     }
@@ -298,5 +356,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnRight_Trigger(InputAction.CallbackContext context);
         void OnRight_Primary(InputAction.CallbackContext context);
         void OnLeft_Primary(InputAction.CallbackContext context);
+        void OnRight_Secondary(InputAction.CallbackContext context);
+        void OnLeft_Secondary(InputAction.CallbackContext context);
     }
 }
